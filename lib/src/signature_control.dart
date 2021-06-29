@@ -466,6 +466,15 @@ class CubicPath {
   /// Path color
   final color;
 
+  /// Minimal size of path.
+  final double width;
+
+  /// Maximal size of path.
+  final double maxWidth;
+
+  /// Type of signature path.
+  final SignatureDrawType type;
+
   /// Checks if this Line is just dot.
   bool get isDot => lines.length == 1 && lines[0].isDot;
 
@@ -476,6 +485,9 @@ class CubicPath {
     this.threshold: 3.0,
     this.smoothRatio: 0.65,
     this.color: Colors.red,
+    this.width: 1.0,
+    this.maxWidth: 10.0,
+    this.type: SignatureDrawType.shape,
   });
 
   /// Adds line to path.
@@ -758,7 +770,17 @@ class HandSignatureControl extends ChangeNotifier {
   /// Maximal velocity.
   final double velocityRange;
 
+  /// Color
   Color color;
+
+  /// Minimal size of path.
+  double width;
+
+  /// Maximal size of path.
+  double maxWidth;
+
+  /// Type of signature path.
+  SignatureDrawType type;
 
   /// Controls input from [HandSignaturePainterView] and creates smooth signature path.
   HandSignatureControl({
@@ -766,6 +788,9 @@ class HandSignatureControl extends ChangeNotifier {
     this.smoothRatio: 0.65,
     this.velocityRange: 2.0,
     this.color: Colors.black,
+    this.width: 1.0,
+    this.maxWidth: 10.0,
+    this.type: SignatureDrawType.shape,
   })  : assert(threshold > 0.0),
         assert(smoothRatio > 0.0),
         assert(velocityRange > 0.0);
@@ -778,6 +803,9 @@ class HandSignatureControl extends ChangeNotifier {
       threshold: threshold,
       smoothRatio: smoothRatio,
       color: color,
+      width: width,
+      maxWidth: maxWidth,
+      type: type,
     )..maxVelocity = velocityRange;
 
     _activePath!.begin(point,

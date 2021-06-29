@@ -463,6 +463,9 @@ class CubicPath {
   /// Best results are between: 0.5 - 0.85.
   final smoothRatio;
 
+  /// Path color
+  final color;
+
   /// Checks if this Line is just dot.
   bool get isDot => lines.length == 1 && lines[0].isDot;
 
@@ -472,6 +475,7 @@ class CubicPath {
   CubicPath({
     this.threshold: 3.0,
     this.smoothRatio: 0.65,
+    this.color: Colors.red,
   });
 
   /// Adds line to path.
@@ -754,11 +758,14 @@ class HandSignatureControl extends ChangeNotifier {
   /// Maximal velocity.
   final double velocityRange;
 
+  Color color;
+
   /// Controls input from [HandSignaturePainterView] and creates smooth signature path.
   HandSignatureControl({
     this.threshold: 3.0,
     this.smoothRatio: 0.65,
     this.velocityRange: 2.0,
+    this.color: Colors.black,
   })  : assert(threshold > 0.0),
         assert(smoothRatio > 0.0),
         assert(velocityRange > 0.0);
@@ -770,6 +777,7 @@ class HandSignatureControl extends ChangeNotifier {
     _activePath = CubicPath(
       threshold: threshold,
       smoothRatio: smoothRatio,
+      color: color,
     )..maxVelocity = velocityRange;
 
     _activePath!.begin(point,

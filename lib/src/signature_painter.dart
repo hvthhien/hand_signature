@@ -74,28 +74,39 @@ class PathSignaturePainter extends CustomPainter {
 
     switch (type) {
       case SignatureDrawType.line:
-        final paint = strokePaint;
 
         paths.forEach((path) {
           if (path.isFilled) {
+            final paint = Paint()
+              ..color = path.color
+              ..style = PaintingStyle.stroke
+              ..strokeCap = StrokeCap.round
+              ..strokeJoin = StrokeJoin.round
+              ..strokeWidth = width;
             canvas.drawPath(PathUtil.toLinePath(path.lines), paint);
           }
         });
         break;
       case SignatureDrawType.arc:
-        final paint = strokePaint;
-
         paths.forEach((path) {
           path.arcs.forEach((arc) {
+            final paint = Paint()
+              ..color = path.color
+              ..style = PaintingStyle.stroke
+              ..strokeCap = StrokeCap.round
+              ..strokeJoin = StrokeJoin.round
+              ..strokeWidth = width;
             paint.strokeWidth = width + (maxWidth - width) * arc.size;
             canvas.drawPath(arc.path, paint);
           });
         });
         break;
       case SignatureDrawType.shape:
-        final paint = fillPaint;
-
         paths.forEach((path) {
+          final paint = Paint()
+            ..color = color
+            ..strokeWidth = 0.0;
+
           if (path.isFilled) {
             if (path.isDot) {
               canvas.drawCircle(path.lines[0],
